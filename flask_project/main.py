@@ -1,6 +1,4 @@
-#!/usr/bin/python3
-"""doc"""
-from website import  create_app
+from website import create_app
 
 app = create_app()
 
