@@ -15,3 +15,22 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
     notes = db.relationship('Note')
+
+"""update"""
+class Quiz(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(150), nullable=False)
+    questions = db.relationship('Question', backref='quiz')
+
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(300), nullable=False)
+    options = db.Column(db.PickleType)  # Store options as a list
+    correct_answer = db.Column(db.String(100), nullable=False)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
+
+class QuizResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
+    score = db.Column(db.Integer, nullable=False)
